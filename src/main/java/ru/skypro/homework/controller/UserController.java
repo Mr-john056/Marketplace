@@ -16,7 +16,6 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    private UserDto dto;
 
     @PostMapping("/set_password")
     public ResponseEntity<NewPasswordDto> setPassword(@RequestBody NewPasswordDto dto, Authentication authentication) {
@@ -25,7 +24,7 @@ public class UserController {
 
     @GetMapping("/me")
     public ResponseEntity<UserDto> getUserInfo(Authentication authentication) {
-        return ResponseEntity.ok(dto);
+        return ResponseEntity.ok(new UserDto());
     }
 
     @PatchMapping("/me")
