@@ -13,12 +13,12 @@ import ru.skypro.homework.dto.CreateOrUpdateCommentDto;
 public class CommentsController {
     @GetMapping("/{id}/comments")
     public ResponseEntity<CommentsDto> getAllComments(@PathVariable Integer id) {
-        return (ResponseEntity<CommentsDto>) ResponseEntity.ok();
+        return ResponseEntity.ok(new CommentsDto());
     }
     @PostMapping("/{id}/comments")
     public ResponseEntity<CommentDto> addComment(@PathVariable("id") Integer id,
                                                  @RequestBody CreateOrUpdateCommentDto createOrUpdateCommentDto) {
-        return (ResponseEntity<CommentDto>) ResponseEntity.ok();
+        return ResponseEntity.ok(new CommentDto());
     }
     @DeleteMapping("/{adId}/comments/{commentId}")
     public ResponseEntity<?> deleteComment (@PathVariable int adId, @PathVariable int commentId) {
@@ -28,6 +28,6 @@ public class CommentsController {
     @PatchMapping("{adId}/comments/{commentId}")
     public ResponseEntity<CommentDto> updateComment(@PathVariable Integer adId, @PathVariable Integer commentId,
                                                     @RequestBody CreateOrUpdateCommentDto createOrUpdateCommentDto) {
-        return (ResponseEntity<CommentDto>) ResponseEntity.ok();
+        return ResponseEntity.ok(new CommentDto());
     }
 }
