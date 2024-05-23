@@ -1,9 +1,10 @@
 package ru.skypro.homework.mapper;
 
+import org.springframework.stereotype.Service;
 import ru.skypro.homework.dto.RegisterDto;
 import ru.skypro.homework.dto.UserDto;
 import ru.skypro.homework.entity.User;
-
+@Service
 public class UserMapper {
     public static UserDto toDto(User user) {
         UserDto userDto = new UserDto();
