@@ -1,5 +1,6 @@
 package ru.skypro.homework.mapper;
 
+import ru.skypro.homework.dto.RegisterDto;
 import ru.skypro.homework.dto.UserDto;
 import ru.skypro.homework.entity.User;
 
@@ -16,15 +17,13 @@ public class UserMapper {
         return userDto;
     }
 
-    public static User toEntity(UserDto userDto) {
+    public User toEntity(RegisterDto dto) {
         User user = new User();
-        user.setId(userDto.getId());
-        user.setEmail(userDto.getEmail());
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
-        user.setPhone(userDto.getPhone());
-        user.setRole(userDto.getRole());
-        user.setImage(userDto.getImage());
+        user.setEmail(dto.getUsername().toLowerCase());
+        user.setPhone(dto.getPhone());
+        user.setFirstName(dto.getFirstName());
+        user.setLastName(dto.getLastName());
+        user.setRole(dto.getRole());
         return user;
     }
 }
