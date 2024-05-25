@@ -20,7 +20,7 @@ public class CommentMapper {
 
         CommentDto commentDto = new CommentDto();
         commentDto.setPk(comment.getPk());
-        commentDto.setCreatedAd(comment.getCreatedAd());
+        commentDto.setCreatedAt(comment.getCreatedAt());
         commentDto.setText(comment.getText());
         commentDto.setAuthor(comment.getUser().getId());
         commentDto.setAuthorFirstName(comment.getUser().getFirstName());

@@ -23,7 +23,7 @@ public class Comment {
     @ManyToOne
     User user;
 
-    int createdAd;
+    int createdAt;
 
     String text;
 }
