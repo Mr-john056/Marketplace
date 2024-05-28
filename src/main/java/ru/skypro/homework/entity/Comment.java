@@ -15,6 +15,8 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer pk;
+    private int createdAt;
+    private String text;
     @JoinColumn()
     @ManyToOne
     Ad ad;
@@ -22,8 +24,4 @@ public class Comment {
     @JoinColumn()
     @ManyToOne
     User user;
-
-    int createdAt;
-
-    String text;
 }
