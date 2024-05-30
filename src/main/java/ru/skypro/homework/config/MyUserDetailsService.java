@@ -6,8 +6,6 @@ import org.springframework.stereotype.Service;
 import ru.skypro.homework.entity.User;
 import ru.skypro.homework.repositories.UserRepository;
 
-import java.util.function.Supplier;
-
 @Service
 public class MyUserDetailsService implements UserDetailsService {
     private UserRepository userRepository;
