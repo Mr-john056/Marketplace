@@ -15,7 +15,7 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer pk;
-    private int createdAt;
+    private long createdAt;
     private String text;
     @JoinColumn()
     @ManyToOne
