@@ -2,14 +2,14 @@ package ru.skypro.homework.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import ru.skypro.homework.dto.Role;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -26,16 +26,21 @@ public class WebSecurityConfig {
     };
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    http.csrf().disable().authorizeHttpRequests(httpRequest -> httpRequest
-            .mvcMatchers(AUTH_WHITELIST).permitAll()
-            .mvcMatchers(HttpMethod.GET, "/ads").permitAll()
-            .mvcMatchers(HttpMethod.POST, "/login","/register").permitAll()
-            .mvcMatchers(HttpMethod.POST,"/ads").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
-            .mvcMatchers("/ads/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
-            .mvcMatchers("/users/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
-    ).cors().and().httpBasic();
-    return http.build();
-}
+        http.csrf()
+                .disable()
+                .authorizeHttpRequests(
+                        authorization ->
+                                authorization
+                                        .mvcMatchers(AUTH_WHITELIST)
+                                        .permitAll()
+                                        .mvcMatchers("/ads/**", "/users/**")
+                                        .authenticated())
+                .cors()
+                .and()
+                .httpBasic(withDefaults());
+        return http.build();
+    }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
