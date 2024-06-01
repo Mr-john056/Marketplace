@@ -10,12 +10,12 @@ import ru.skypro.homework.entity.User;
 import java.io.IOException;
 
 public interface UserService {
-    public void updatePassword(NewPasswordDto dto, String username);
+    void updatePassword(NewPasswordDto dto, String username);
 
     byte[] getImage(String username);
 
-    public UserDto getInfoAboutMe(String username);
-    public UpdateUserDto updateInfoAboutMe(String username, UpdateUserDto dto);
-    public void updateMyImage(String username, MultipartFile file) throws IOException;
-    public User registerUser(RegisterDto dto);
+    UserDto getInfoAboutMe(String username);
+    UpdateUserDto updateInfoAboutMe(String username, UpdateUserDto dto);
+    void updateMyImage(String username, MultipartFile file) throws IOException;
+    User registerUser(RegisterDto dto);
 }

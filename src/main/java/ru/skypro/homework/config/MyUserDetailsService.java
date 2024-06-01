@@ -8,7 +8,7 @@ import ru.skypro.homework.repositories.UserRepository;
 
 @Service
 public class MyUserDetailsService implements UserDetailsService {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public MyUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -16,7 +16,7 @@ public class MyUserDetailsService implements UserDetailsService {
     @Override
     public MyUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Object user = userRepository.findByEmail(username).orElseThrow(()-> new UsernameNotFoundException("User is not found"));
-        return new MyUserDetails((User) user);
+        User user = userRepository.findByEmail(username).orElseThrow(()-> new UsernameNotFoundException("User is not found"));
+        return new MyUserDetails(user);
     }
 }

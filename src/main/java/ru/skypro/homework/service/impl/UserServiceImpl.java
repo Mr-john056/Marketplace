@@ -28,9 +28,9 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
-    private UserRepository userRepository;
-    private UserMapper userMapper;
-    private PasswordEncoder encoder;
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
+    private final PasswordEncoder encoder;
     @Value("${path.to.user.images}")
     private String imagePath;
     @Value("${path.to.default.user.image}")
@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto getInfoAboutMe(String username) {
         User user = userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User is not found"));
-        return userMapper.toDto(user);
+        return UserMapper.toDto(user);
     }
 
     @Override
@@ -114,7 +114,7 @@ public class UserServiceImpl implements UserService {
                 InputStream is = file.getInputStream();
                 OutputStream os = Files.newOutputStream(path, CREATE_NEW);
                 BufferedInputStream bis = new BufferedInputStream(is, 1024);
-                BufferedOutputStream bos = new BufferedOutputStream(os, 1024);
+                BufferedOutputStream bos = new BufferedOutputStream(os, 1024)
         ) {
             bis.transferTo(bos);
             user.setImage(path.toString());

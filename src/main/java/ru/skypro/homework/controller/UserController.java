@@ -19,7 +19,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    private UserServiceImpl userService;
+    private final UserServiceImpl userService;
 
     public UserController(UserServiceImpl userService) {
         this.userService = userService;
