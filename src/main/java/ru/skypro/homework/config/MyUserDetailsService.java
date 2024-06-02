@@ -8,11 +8,12 @@ import ru.skypro.homework.repositories.UserRepository;
 
 @Service
 public class MyUserDetailsService implements UserDetailsService {
-    private final UserRepository userRepository;
+    private UserRepository userRepository;
 
     public MyUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
     @Override
     public MyUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 

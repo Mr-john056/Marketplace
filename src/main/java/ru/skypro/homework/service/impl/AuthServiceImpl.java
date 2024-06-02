@@ -20,7 +20,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public boolean login(String userName, String password) {
-        return false;
+        return true;
     }
 
     @Override

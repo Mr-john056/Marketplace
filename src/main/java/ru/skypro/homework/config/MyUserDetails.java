@@ -8,12 +8,14 @@ import ru.skypro.homework.entity.User;
 import java.util.Collection;
 import java.util.List;
 
+
 public class MyUserDetails implements UserDetails {
-    private final User user;
+    private User user;
 
     public MyUserDetails(User user) {
         this.user = user;
     }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
