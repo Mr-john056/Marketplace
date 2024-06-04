@@ -35,58 +35,58 @@ public class WebSecurityConfig {
             "/login",
             "/register"
     };
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        http.cors((cors) -> cors.configurationSource(corsConfigurationSource()))
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(
-                        authorization ->
-                                authorization
-                                        .mvcMatchers(AUTH_WHITELIST)
-                                        .permitAll()
-                                        .mvcMatchers("/ads/**", "/users/**", "image/**")
-                                        .authenticated())
-                .httpBasic(withDefaults());
-        return http.build();
-    }
 //    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        http.csrf()
-//                .disable()
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+//        http.cors((cors) -> cors.configurationSource(corsConfigurationSource()))
+//                .csrf(AbstractHttpConfigurer::disable)
 //                .authorizeHttpRequests(
 //                        authorization ->
 //                                authorization
 //                                        .mvcMatchers(AUTH_WHITELIST)
 //                                        .permitAll()
-//                                        .mvcMatchers("/ads/**", "/users/**")
+//                                        .mvcMatchers("/ads/**", "/users/**", "image/**")
 //                                        .authenticated())
-//                .cors()
-//                .and()
 //                .httpBasic(withDefaults());
 //        return http.build();
 //    }
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.csrf()
+                .disable()
+                .authorizeHttpRequests(
+                        authorization ->
+                                authorization
+                                        .mvcMatchers(AUTH_WHITELIST)
+                                        .permitAll()
+                                        .mvcMatchers("/ads/**", "/users/**")
+                                        .authenticated())
+                .cors()
+                .and()
+                .httpBasic(withDefaults());
+        return http.build();
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowCredentials(true);
-        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
-        configuration.setAllowedHeaders(List.of("*"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
+//    @Bean
+//    CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.setAllowCredentials(true);
+//        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+//        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+//        configuration.setAllowedHeaders(List.of("*"));
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//
+//    }
+//
+//    @Bean
+//    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+//        return authenticationConfiguration.getAuthenticationManager();
+//    }
 
 }
