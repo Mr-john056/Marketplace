@@ -18,7 +18,7 @@ public class UserMapper {
         return userDto;
     }
 
-    public User toEntity(RegisterDto dto) {
+    public static User toEntity(RegisterDto dto) {
         User user = new User();
         user.setEmail(dto.getUsername().toLowerCase());
         user.setPhone(dto.getPhone());
