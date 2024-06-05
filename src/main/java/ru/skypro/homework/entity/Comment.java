@@ -19,9 +19,9 @@ public class Comment {
     private String text;
     @JoinColumn()
     @ManyToOne
-    Ad ad;
+    private Ad ad;
 
     @JoinColumn()
     @ManyToOne
-    User user;
+    private User user;
 }
