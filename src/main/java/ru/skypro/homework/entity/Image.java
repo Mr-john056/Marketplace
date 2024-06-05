@@ -2,26 +2,16 @@ package ru.skypro.homework.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Lob;
+import javax.persistence.*;
 
-@NoArgsConstructor
 @Data
-@AllArgsConstructor
-@Builder
 @Entity
-@ToString
+@Table(name = "images")
 public class Image {
     @Id
-    @GeneratedValue
-    private Long id;
-    private String name;
-    private String filePath;
-    private long fileSize;
-    private String mediaType;
-    @Lob
-    private byte[] data;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private String path;
+    private Long size;
+    private String contentType;
 }
