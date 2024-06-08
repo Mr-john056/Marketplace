@@ -14,13 +14,6 @@ public class RegistrationServiceImpl implements RegistrationService {
         this.userService = userService;
         this.userRepository = userRepository;
     }
-     /*
-      Регистрирует нового пользователя.
-
-      @param registerDto Данные для регистрации нового пользователя.
-      @return true, если регистрация прошла успешно, иначе false.
-     */
-
     @Override
     public boolean register(RegisterDto registerDto) {
         if(userRepository.findByEmail(registerDto.getUsername()).isPresent()) {
