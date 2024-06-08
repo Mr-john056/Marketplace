@@ -29,8 +29,10 @@ public class CommentServiceImpl implements CommentService {
             return commentMapper.toCommentsDto(commentRepository.findByAdPk(adPk));
         }
         else {
-            throw new NotFoundException("Ad is not found");}
+            throw new NotFoundException("Ad is not found");
+        }
     }
+
     public CommentDto addComment(Integer pk, CreateOrUpdateCommentDto dto, Authentication authentication) {
         if (adsRepository.existsById(pk)){
             User user = userRepository.findByEmail(authentication.getName()).orElseThrow(RuntimeException::new);
@@ -44,6 +46,7 @@ public class CommentServiceImpl implements CommentService {
         else {
             throw new NotFoundException("Ad is not found");}
     }
+
     @Override
     public CommentDto updateComment(Integer adPk,
                                     Integer commentId,
@@ -56,10 +59,12 @@ public class CommentServiceImpl implements CommentService {
         else {
             throw new NotFoundException("Comment is not found");}
     }
+
     @Override
     public Comment getComment(Integer pk) {
         return commentRepository.findById(pk).orElseThrow();
     }
+
     @Override
     public void deleteComment(Integer adId, Integer commentId, Authentication authentication) throws NotFoundException {
         if (commentRepository.existsById(commentId)) {
@@ -67,6 +72,5 @@ public class CommentServiceImpl implements CommentService {
         } else {
             throw new NotFoundException("Comment is not found");
         }
-
     }
 }

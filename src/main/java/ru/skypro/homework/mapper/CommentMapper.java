@@ -5,6 +5,7 @@ import ru.skypro.homework.dto.CommentDto;
 import ru.skypro.homework.dto.CommentsDto;
 import ru.skypro.homework.dto.CreateOrUpdateCommentDto;
 import ru.skypro.homework.entity.Comment;
+import ru.skypro.homework.entity.User;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,15 +18,14 @@ public class CommentMapper {
     }
 
     public CommentDto toCommentDto(Comment comment){
-
         CommentDto commentDto = new CommentDto();
         commentDto.setPk(comment.getPk());
         commentDto.setCreatedAt(comment.getCreatedAt());
         commentDto.setText(comment.getText());
-        commentDto.setAuthor(comment.getUser().getId());
-        commentDto.setAuthorFirstName(comment.getUser().getFirstName());
-        commentDto.setAuthorImage(comment.getUser().getImage());
-
+        User user = comment.getUser();
+        commentDto.setAuthor(user.getId());
+        commentDto.setAuthorFirstName(user.getFirstName());
+        commentDto.setAuthorImage("/users/" + user.getEmail() + "/image");
         return commentDto;
     }
 

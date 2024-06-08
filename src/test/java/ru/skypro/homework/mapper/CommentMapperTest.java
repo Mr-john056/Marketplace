@@ -34,6 +34,7 @@ class CommentMapperTest {
         User user = new User();
         user.setId(1);
         user.setFirstName("John");
+        user.setEmail("mail");
         user.setImage("profile.jpg");
         comment.setUser(user);
 
@@ -43,7 +44,7 @@ class CommentMapperTest {
         assertEquals("Test Comment", commentDto.getText());
         assertEquals(1L, commentDto.getAuthor());
         assertEquals("John", commentDto.getAuthorFirstName());
-        assertEquals("profile.jpg", commentDto.getAuthorImage());
+        assertEquals("/users/mail/image", commentDto.getAuthorImage());
     }
 
     @Test

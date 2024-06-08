@@ -27,53 +27,51 @@ public class CommentsController {
         this.adService = adService;
     }
 
-        @GetMapping("/{id}/comments")
-        @PreAuthorize("isAuthenticated()")
-        public ResponseEntity<CommentsDto> getAllComments (@PathVariable Integer id, Authentication authentication){
-            try {
-                commentService.getComments(id, authentication);
-            } catch (NotFoundException e) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
+    @GetMapping("/{id}/comments")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<CommentsDto> getAllComments(@PathVariable Integer id, Authentication authentication){
+        try {
             return ResponseEntity.ok(commentService.getComments(id, authentication));
-
-        }
-        @PostMapping("/{id}/comments")
-        @PreAuthorize("isAuthenticated()")
-        public ResponseEntity<CommentDto> addComment (@PathVariable("id") Integer id,
-                @RequestBody CreateOrUpdateCommentDto createOrUpdateCommentDto,
-                Authentication authentication){
-            try {
-                commentService.addComment(id, createOrUpdateCommentDto, authentication);
-            } catch (NotFoundException e) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
-            return ResponseEntity.ok(commentService.addComment(id, createOrUpdateCommentDto, authentication));
-        }
-        @DeleteMapping("/{adId}/comments/{commentId}")
-        @PreAuthorize("hasAuthority('ADMIN') or @commentServiceImpl.getComment(#commentId).user.email == authentication.principal.username")
-        public ResponseEntity<?> deleteComment ( @PathVariable int adId, @PathVariable int commentId, Authentication
-        authentication){
-            try {
-                commentService.deleteComment(adId, commentId, authentication);
-            } catch (NotFoundException e) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-
-        }
-        @PatchMapping("{adId}/comments/{commentId}")
-        @PreAuthorize("hasAuthority('ADMIN') or @commentServiceImpl.getComment(#commentId).user.email == authentication.principal.username")
-        public ResponseEntity<CommentDto> updateComment (@PathVariable Integer adId, @PathVariable Integer commentId,
-                @RequestBody CreateOrUpdateCommentDto createOrUpdateCommentDto,
-                Authentication authentication){
-            try {
-                commentService.updateComment(adId, commentId, createOrUpdateCommentDto, authentication);
-            } catch (NotFoundException e) {
-
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
-            return ResponseEntity.ok(commentService.updateComment(adId, commentId, createOrUpdateCommentDto, authentication));
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+    @PostMapping("/{id}/comments")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<CommentDto> addComment (@PathVariable("id") Integer id,
+            @RequestBody CreateOrUpdateCommentDto createOrUpdateCommentDto,
+            Authentication authentication){
+        try {
+            commentService.addComment(id, createOrUpdateCommentDto, authentication);
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(commentService.addComment(id, createOrUpdateCommentDto, authentication));
+    }
+    @DeleteMapping("/{adId}/comments/{commentId}")
+    @PreAuthorize("hasAuthority('ADMIN') or @commentServiceImpl.getComment(#commentId).user.email == authentication.principal.username")
+    public ResponseEntity<?> deleteComment ( @PathVariable int adId, @PathVariable int commentId, Authentication
+    authentication){
+        try {
+            commentService.deleteComment(adId, commentId, authentication);
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
+    }
+    @PatchMapping("{adId}/comments/{commentId}")
+    @PreAuthorize("hasAuthority('ADMIN') or @commentServiceImpl.getComment(#commentId).user.email == authentication.principal.username")
+    public ResponseEntity<CommentDto> updateComment (@PathVariable Integer adId, @PathVariable Integer commentId,
+            @RequestBody CreateOrUpdateCommentDto createOrUpdateCommentDto,
+            Authentication authentication){
+        try {
+            commentService.updateComment(adId, commentId, createOrUpdateCommentDto, authentication);
+        } catch (NotFoundException e) {
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(commentService.updateComment(adId, commentId, createOrUpdateCommentDto, authentication));
+    }
+}
 
