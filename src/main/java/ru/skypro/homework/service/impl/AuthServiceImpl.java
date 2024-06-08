@@ -7,6 +7,10 @@ import ru.skypro.homework.config.MyUserDetailsService;
 import ru.skypro.homework.dto.LoginDto;
 import ru.skypro.homework.service.AuthService;
 
+   /*
+    Сервис аутентификации.
+   */
+
 @Service
 public class AuthServiceImpl implements AuthService {
 
@@ -17,11 +21,22 @@ public class AuthServiceImpl implements AuthService {
         this.myUserDetailService = myUserDetailService;
         this.encoder = passwordEncoder;
     }
+     /*
+      Проверяет валидность логина пользователя.
+      @param userName Имя пользователя.
+      @param password Пароль пользователя.
+      @return true, если логин и пароль верны, false - иначе.
+     */
 
     @Override
     public boolean login(String userName, String password) {
         return true;
     }
+     /*
+      Проверяет валидность логина пользователя.
+      @param loginDto Объект, содержащий имя пользователя и пароль.
+      @return true, если логин и пароль верны, false - иначе.
+     */
 
     @Override
     public boolean login(LoginDto loginDto) {

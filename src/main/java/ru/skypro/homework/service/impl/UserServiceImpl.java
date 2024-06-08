@@ -42,6 +42,14 @@ public class UserServiceImpl implements UserService {
         this.userMapper = userMapper;
         this.encoder = encoder;
     }
+     /*
+      Обновляет пароль пользователя.
+
+      @param dto             Объект, содержащий новый пароль и текущий пароль.
+      @param username       Имя пользователя.
+      @throws PasswordIsNotCorrectException Если текущий пароль неверен.
+      @throws UsernameNotFoundException    Если пользователь с данным именем не найден.
+     */
 
     @Override
     public void updatePassword(NewPasswordDto dto, String username) throws PasswordIsNotCorrectException {
@@ -55,6 +63,13 @@ public class UserServiceImpl implements UserService {
 
 
     }
+     /*
+      Возвращает изображение пользователя по его имени.
+
+      @param username Имя пользователя.
+      @return Массив байтов, представляющий изображение.
+      @throws UsernameNotFoundException Если пользователь с данным именем не найден.
+     */
 
     @Override
     public byte[] getImage(String username) {
@@ -68,12 +83,27 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException(e);
         }
     }
+     /*
+      Возвращает информацию о текущем пользователе.
+
+      @param username Имя пользователя.
+      @return Объект UserDto, содержащий информацию о пользователе.
+      @throws UsernameNotFoundException Если пользователь с данным именем не найден.
+     */
 
     @Override
     public UserDto getInfoAboutMe(String username) {
         User user = userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User is not found"));
         return UserMapper.toDto(user);
     }
+     /*
+      Обновляет информацию о текущем пользователе.
+
+      @param username Имя пользователя.
+      @param dto      Объект UpdateUserDto, содержащий обновленные данные.
+      @return Объект UpdateUserDto, содержащий обновленные данные.
+      @throws UsernameNotFoundException Если пользователь с данным именем не найден.
+     */
 
     @Override
     public UpdateUserDto updateInfoAboutMe(String username, UpdateUserDto dto) {
@@ -84,12 +114,27 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         return dto;
     }
+     /*
+      Обновляет изображение текущего пользователя.
+
+      @param username Имя пользователя.
+      @param file     Файл изображения.
+      @throws IOException             Если произошла ошибка при чтении файла или записи изображения.
+      @throws UsernameNotFoundException Если пользователь с данным именем не найден.
+     */
 
     @Override
     public void updateMyImage(String username, MultipartFile file) throws IOException {
         User user = userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User is not found"));
         uploadImage(user, file);
     }
+     /*
+      Регистрирует нового пользователя.
+
+      @param dto Данные для регистрации пользователя.
+      @return Зарегистрированный пользователь.
+      @throws UserAlreadyRegisteredException Если пользователь с таким email уже существует.
+     */
 
 
     @Override
@@ -102,6 +147,13 @@ public class UserServiceImpl implements UserService {
             return userRepository.save(user);
         }
     }
+     /*
+      Загружает изображение пользователя.
+
+      @param user Пользователь, для которого загружается изображение.
+      @param file Файл с изображением.
+      @throws IOException Если произошла ошибка во время записи файла.
+     */
 
     public void uploadImage(User user, MultipartFile file) throws IOException {
         Path path = Path.of(imagePath, user.getEmail() + "." + StringUtils.getFilenameExtension(file.getOriginalFilename()));
