@@ -12,16 +12,19 @@ import ru.skypro.homework.dto.AdsDto;
 import ru.skypro.homework.dto.CreateOrUpdateAdDto;
 import ru.skypro.homework.dto.ExtendedAdDto;
 import ru.skypro.homework.entity.Ad;
+import ru.skypro.homework.entity.Comment;
 import ru.skypro.homework.entity.User;
 import ru.skypro.homework.exception.AdNotFoundException;
 import ru.skypro.homework.mapper.AdMapper;
 import ru.skypro.homework.repositories.AdRepository;
+import ru.skypro.homework.repositories.CommentRepository;
 import ru.skypro.homework.repositories.UserRepository;
 import ru.skypro.homework.service.AdService;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
@@ -32,7 +35,9 @@ public class AdServiceImpl implements AdService {
     private String photoPath;
     private final AdMapper adMapper;
     private final AdRepository adRepository;
+    private final CommentRepository commentRepository;
     private final UserRepository userRepository;
+
     @Override
     public AdDto addAd(CreateOrUpdateAdDto createOrUpdateAdDto, MultipartFile image, Authentication authentication) throws IOException {
         User user = userRepository.findByEmail(authentication.getName()).orElseThrow(()-> new UsernameNotFoundException(authentication.getName()));
@@ -99,6 +104,11 @@ public class AdServiceImpl implements AdService {
     @Override
     public void deleteAd(Integer id, Authentication authentication) throws AdNotFoundException {
         if (adRepository.existsById(id)) {
+
+            List<Comment> comments = commentRepository.findByAdPk(id);
+            for (Comment c : comments)
+                commentRepository.delete(c);
+            
             adRepository.delete(getAd(id));
         } else {
             throw new AdNotFoundException(id);
